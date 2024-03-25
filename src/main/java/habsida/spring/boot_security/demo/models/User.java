@@ -22,7 +22,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-
+    private String email;
     private String name;
     private String LastName;
     private byte age;
@@ -33,13 +33,6 @@ public class User implements UserDetails {
                 inverseJoinColumns = {@JoinColumn(name = "roles_id")})
     private Set<Role> roles;
 
-    public User(@NonNull String name, String lastName, byte age, @NonNull String password, @NonNull Set<Role> roles) {
-        this.name = name;
-        LastName = lastName;
-        this.age = age;
-        this.password = password;
-        this.roles = roles;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,7 +50,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getName();
+        return getEmail();
     }
 
     @Override
@@ -78,5 +71,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String toStringRoles() {
+        StringBuilder rolesString = new StringBuilder();
+        for (Role role : roles) {
+            rolesString.append(role.toString()).append(" ");
+        }
+        return rolesString.toString();
+    }
+
+    public boolean findRole(String role) {
+        return roles.stream().anyMatch(r -> r.getRole().equals(role));
     }
 }

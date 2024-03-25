@@ -4,7 +4,6 @@ import habsida.spring.boot_security.demo.models.User;
 import habsida.spring.boot_security.demo.services.RoleService;
 import habsida.spring.boot_security.demo.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,9 +22,11 @@ public class UserController {
 
 
     @GetMapping(value = "/admin/gen")
-    public ModelAndView showUsers() {
+    public ModelAndView showUsers(Principal principal) {
         ModelAndView mov = new ModelAndView("/gen");
         mov.addObject("users",userService.listUsers());
+        mov.addObject("roles", roleService.listRoles());
+        mov.addObject("username",userService.findByEmail(principal.getName()));
         return mov;
     }
 
@@ -36,14 +37,14 @@ public class UserController {
         return mov;
     }
 
-    @PostMapping("/admin/gen")
+    @PostMapping("/admin/new")
     public String create(@ModelAttribute("user") User user) {
         userService.add(user);
         return "redirect:/admin/gen";
     }
 
     @GetMapping("/admin/edit")
-    public ModelAndView edit(@RequestParam long id) {
+    public ModelAndView edit(@RequestParam Long id) {
         ModelAndView mav = new ModelAndView("/edit");
         User user = userService.userById(id).get();
         mav.addObject("user", user);
@@ -57,8 +58,8 @@ public class UserController {
         return "redirect:/admin/gen";
     }
 
-    @PostMapping("/admin/delete")
-    public String deleteUser(@RequestParam long id) {
+    @GetMapping("/admin/delete")
+    public String deleteUser(@RequestParam Long id) {
         userService.remove(id);
         return "redirect:/admin/gen";
     }
@@ -71,7 +72,7 @@ public class UserController {
     @GetMapping("/user")
     public ModelAndView user(Principal principal) {
         ModelAndView mov = new ModelAndView("/user");
-        mov.addObject("user", userService.findByName(principal.getName()));
+        mov.addObject("user", userService.findByEmail(principal.getName()));
         return mov;
     }
 }
