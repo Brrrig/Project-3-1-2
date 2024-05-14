@@ -16,7 +16,7 @@ public class GetOneRestController {
 
     private final UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping("/rest/user")
     public ResponseEntity<User> userById(Principal principal) {
         return ResponseEntity.ok(userService.findByEmail(principal.getName()).get());
     }

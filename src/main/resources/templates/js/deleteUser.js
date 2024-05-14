@@ -30,7 +30,7 @@ const formDelete = document.getElementById('formDelete')
 formDelete.addEventListener('submit', e =>{
     e.preventDefault();
     const formData = new FormData(formDelete);
-    fetch("/admin/gen"+formData.get("id"), {
+    fetch("/rest/admin/gen"+formData.get("id"), {
         method: "DELETE"
     })
         .then(() => getUsers());

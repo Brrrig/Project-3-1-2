@@ -51,7 +51,7 @@ formEdit.addEventListener('submit', e => {
             object[key] = value;
         }
     });
-    fetch("/admin/gen", {
+    fetch("/rest/admin/gen", {
         method: "PUT",
         headers: {
             "Content-type": "application/json"

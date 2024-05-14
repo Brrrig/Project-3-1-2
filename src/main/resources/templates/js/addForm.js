@@ -22,7 +22,7 @@ addForm.addEventListener("submit", (e) => {
         }
     });
 
-    fetch("/admin/gen", {
+    fetch("/rest/admin/gen", {
         method: "POST",
         headers: {
             "Content-type": "application/json"

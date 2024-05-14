@@ -4,6 +4,7 @@ import habsida.spring.boot_security.demo.models.Role;
 import habsida.spring.boot_security.demo.repositories.RoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public class RoleServiceImpl implements RoleService{
 
     private RoleRepository roleRepository;
 
+    @Transactional
     @Override
     public List<Role> listRoles() {
         return roleRepository.findAll();
@@ -25,6 +27,7 @@ public class RoleServiceImpl implements RoleService{
         roleRepository.save(role);
     }
 
+    @Transactional
     @Override
     public Optional<Role> findById(byte id) {
         return roleRepository.findById(id);

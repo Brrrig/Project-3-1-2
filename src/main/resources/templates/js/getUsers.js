@@ -1,5 +1,5 @@
 async function getUsers() {
-    const response = await fetch("http://localhost:8080/admin/gen");
+    const response = await fetch("/rest/admin/gen");
 
     if (response.ok) {
         let json = await response.json().then(data => replaceTable(data));
