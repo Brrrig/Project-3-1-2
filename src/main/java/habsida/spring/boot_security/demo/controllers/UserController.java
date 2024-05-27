@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/admin/new")
     public ModelAndView newPerson(@ModelAttribute("user") User user) {
-        ModelAndView mov = new ModelAndView("/new");
+        ModelAndView mov = new ModelAndView("/gen");
         mov.addObject("roles", roleService.listRoles());
         return mov;
     }
@@ -42,7 +42,7 @@ public class UserController {
 
     @GetMapping("/admin/edit")
     public ModelAndView edit(@RequestParam Long id) {
-        ModelAndView mav = new ModelAndView("/edit");
+        ModelAndView mav = new ModelAndView("/gen");
         User user = userService.userById(id).get();
         mav.addObject("user", user);
         mav.addObject("roles", roleService.listRoles());
@@ -55,20 +55,15 @@ public class UserController {
         return "redirect:/admin/gen";
     }
 
-    @GetMapping("/admin/delete")
-    public String deleteUser(@RequestParam Long id) {
+    @GetMapping("/admin/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
         userService.remove(id);
         return "redirect:/admin/gen";
     }
 
-    @GetMapping("/index")
-    public String index() {
-        return "/index";
-    }
-
     @GetMapping("/user")
     public ModelAndView user(Principal principal) {
-        ModelAndView mov = new ModelAndView("/user");
+        ModelAndView mov = new ModelAndView("/gen");
         mov.addObject("user", userService.findByEmail(principal.getName()));
         return mov;
     }

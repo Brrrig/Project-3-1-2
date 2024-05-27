@@ -1,79 +1,81 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet"/>-->
-<!--    <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>List of Users</title>-->
-<!--    <style>-->
-<!--        .left_nav {-->
-<!--            background-color: aquamarine;-->
-<!--            width: 10%;-->
-<!--            height: 100vh;-->
-<!--            left: 0;-->
-<!--            position: fixed;-->
-<!--        }-->
 
-<!--        .table_users {-->
-<!--            margin-left: 15%;-->
-<!--            margin-right: 5%;-->
-<!--            padding-top: 5%;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--<nav class="navbar navbar-dark bg-dark">-->
-<!--    <a class="navbar-brand mb-0 h1" style="color: white">-->
-<!--        <span th:text="${user.get().getEmail()}"></span> with role-->
-<!--        <span th:text="${user.get().toStringRoles()}"></span>-->
-<!--    </a>-->
-<!--    <form th:action="@{/logout}" th:method="post">-->
-<!--        <button class="btn btn-link" type="submit" style="color: white">Logout</button>-->
-<!--    </form>-->
-<!--</nav>-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <th th:text="${user.get().getEmail()}"></th> with roles: <td th:text="${user.get().toStringRoles()}"></td></a>
+        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 
-<!--<div class="left_nav">-->
-<!--    <nav class="btn-group-vertical">-->
-<!--        <th:block th:if="${user.get().findRole('ROLE_ADMIN')}">-->
-<!--            <a class="btn btn-secondary" href='/admin/gen' role="button">Admin</a>-->
-<!--        </th:block>-->
-<!--        <p></p>-->
-<!--        <th:block th:if="${user.get().findRole('ROLE_USER')}">-->
-<!--            <button type="button" class="btn btn-outline-secondary">User</button>-->
-<!--        </th:block>-->
-<!--    </nav>-->
-<!--</div>-->
+<div class="container-fluid ">
+    <div class="row ">
+        <div class="col-2 bg-white pt-3 min-vh-100 px-0">
+            <div class="container-fluid px-0">
+                <ul class="nav flex-column nav-pills ">
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/gen">Admin</a>
+                        </li>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="col  pt-3 h-100 min-vh-100 bg-light">
+            <!-- Admin panel -->
+            <div class="container-fluid">
+                <h1 class="display-6"><b>User Info</b></h1>
+                <div class="container-fluid bg-white py-3 px-4">
+                    <table class="table table-striped border-top">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Roles</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td th:text="${user.get().getId()}">VALUE</td>
+                        <td th:text="${user.get().getEmail()}">VALUE</td>
+                        <td th:text="${user.get().getName()}">VALUE</td>
+                        <td th:text="${user.get().getLastName()}">VALUE</td>
+                        <td th:text="${user.get().getAge()}">VALUE</td>
+                        <td>
+                            <th:block th:each="role : ${user.get().getRoles()}">
+                                &nbsp;<span th:text="${role.toString()}"/>
+                            </th:block>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-<!--<div class="table_users">-->
-<!--    <table class="table table-striped">-->
-<!--        <thead>-->
-<!--        <tr class="border-top">-->
-<!--            <th scope="col">ID</th>-->
-<!--            <th scope="col">Email</th>-->
-<!--            <th scope="col">Name</th>-->
-<!--            <th scope="col">Last Name</th>-->
-<!--            <th scope="col">Age</th>-->
-<!--            <th scope="col">Roles</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
+    </div>
+</div>
 
-<!--        <tr>-->
-<!--            <td th:text="${user.get().id}">ID</td>-->
-<!--            <td th:text="${user.get().email}">Email</td>-->
-<!--            <td th:text="${user.get().name}">Name</td>-->
-<!--            <td th:text="${user.get().lastName}">Last Name</td>-->
-<!--            <td th:text="${user.get().age}">Age</td>-->
-<!--            <td>-->
-<!--                <th:block th:each="role : ${user.get().getRoles()}">-->
-<!--                    &nbsp;<span th:text="${role.toString()}"/>-->
-<!--                </th:block>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
+</body>
+</html>
