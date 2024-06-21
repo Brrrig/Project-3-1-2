@@ -3,6 +3,7 @@ package habsida.spring.boot_security.demo.services;
 import habsida.spring.boot_security.demo.models.User;
 import habsida.spring.boot_security.demo.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void update(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getPassword() == null) {
+            user.setPassword(userRepository.findById(user.getId()).get().getPassword());
+        }
         userRepository.save(user);
     }
 
@@ -51,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Optional<User> findByEmail(String userName) {
+    public Optional<UserDetails> findByEmail(String userName) {
         return userRepository.findByEmail(userName);
     }
 }

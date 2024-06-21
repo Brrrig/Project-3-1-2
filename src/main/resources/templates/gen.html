@@ -101,12 +101,12 @@
                                 <div class="row mb-3">
                                     <label for="name" class="form-label text-center"><b>First name</b></label>
                                     <input type="text" class="form-control" name="name" id="name"
-                                           placeholder="First name" required>
+                                           placeholder="First Name" required>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="lastName" class="form-label text-center"><b>Last name</b></label>
                                     <input name="lastName" type="text" class="form-control" id="lastName"
-                                           placeholder="Last name" required>
+                                           placeholder="Last Name" required>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="email" class="form-label text-center"><b>Email</b></label>
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <label for="age" class="form-label text-center"><b>Age</b></label>
-                                    <input type="number" class="form-control" name="email" id="age" placeholder="Age"
+                                    <input type="number" class="form-control" name="age" id="age" placeholder="Age"
                                            required>
                                 </div>
                                 <div class="row mb-3">
@@ -423,17 +423,17 @@
 
                 element.innerHTML = `
             <th scope="row">${id}</th>
-            <td>${email}</td>
             <td>${name}</td>
             <td>${lastName}</td>
+            <td>${email}</td>
             <td>${age}</td>
             <td>${userRoles}</td>
             <td>
                 <button type="button" class="btn btn-info text-white"
                     data-bs-userId=${id}
-                    data-bs-userEmail=${email}
                     data-bs-userName=${name}
                     data-bs-userLastName=${lastName}
+                    data-bs-userEmail=${email}
                     data-bs-userAge=${age}
                     data-bs-toggle="modal"
                     data-bs-target="#ModalEdit">Edit</button>
@@ -441,9 +441,9 @@
             <td>
                 <button type="button" class="btn btn-danger"
                     data-bs-userId=${id}
-                    data-bs-userEmail=${email}
                     data-bs-userName=${name}
                     data-bs-userLastName=${lastName}
+                    data-bs-userEmail=${email}
                     data-bs-userAge=${age}
                     data-bs-toggle="modal"
                     data-bs-target="#ModalDelete">Delete</button>

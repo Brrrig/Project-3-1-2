@@ -16,30 +16,37 @@ public class UserRestController {
 
     private final UserService userService;
 
-    private ResponseEntity<List<User>> rok() {
+    private ResponseEntity<List<User>> responseEntitySuc() {
         return ResponseEntity.ok(userService.listUsers());
     }
 
     @GetMapping()
     public ResponseEntity<List<User>> showUsers() {
-        return rok();
+        return responseEntitySuc();
     }
 
     @PostMapping()
     public ResponseEntity<List<User>> create(@RequestBody User user) {
         userService.add(user);
-        return rok();
+        return responseEntitySuc();
     }
 
     @PutMapping()
     public ResponseEntity<List<User>> update(@RequestBody User user) {
+        if (user.getPassword() == null) {
+            user.setPassword(userService.userById(user.getId()).get().getPassword());
+        }
+        if (user.getRoles().isEmpty()) {
+            user.setRoles(userService.userById(user.getId()).get().getRoles());
+        }
         userService.update(user);
-        return rok();
+
+        return responseEntitySuc();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<List<User>> deleteUser(@PathVariable("id") long id) {
         userService.remove(id);
-        return rok();
+        return responseEntitySuc();
     }
 }

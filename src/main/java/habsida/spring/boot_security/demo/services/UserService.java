@@ -2,6 +2,8 @@ package habsida.spring.boot_security.demo.services;
 
 
 import habsida.spring.boot_security.demo.models.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +17,5 @@ public interface UserService {
 
     Optional<User> userById(long id);
 
-    Optional<User> findByEmail(String userName);
+    Optional<UserDetails> findByEmail(String userName);
 }
